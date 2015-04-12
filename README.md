@@ -1,4 +1,4 @@
-# nerdzeu/MediaCrush
+# nerdzeu/mediacrush
 
 This repo is part of the docker enviroment for nerdz (`nerdzeu/docker`).
 
@@ -11,8 +11,8 @@ Use it as part of nerdzeu/docker.
 If you want to pull and run the image you can do it in the classical docker way:
 
 ```sh
-docker pull nerdzeu/docker-nginx
-docker run nerdzeu/docker-nginx
+docker pull nerdzeu/docker-mediacrush
+docker run nerdzeu/docker-mediacrush
 ```
 
 If you want to build the image:
