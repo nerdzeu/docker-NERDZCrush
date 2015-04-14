@@ -1,16 +1,17 @@
 redis:
     image: redis
-    ports:
+    expose:
         - "6379"
     volumes:
         - redis:/data
 
 mediacrush:
     image: nerdzeu/docker-mediacrush
+    #build: .
     ports:
-        - "80:81"
-        - "443:444"
+        - "81:81"
+        - "444:444"
     links:
         - redis
     volumes:
-        - MediaCrush:/home/mediacrush/MediaCrush
+        - mediacrush:/home/mediacrush

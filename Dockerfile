@@ -35,22 +35,15 @@ RUN yaourt -S decklink-sdk --noconfirm
 RUN cd /tmp && yaourt -G ffmpeg-full && cd ffmpeg-full && makepkg --skippgpcheck --noconfirm -s
 
 USER root
+
 RUN yes | pacman -U /tmp/ffmpeg-full/*.xz
+RUN pacman -S python2-pip python2-celery python2-flask --noconfirm && npm install -g coffee-script
 
-USER mediacrush
-
-WORKDIR /home/mediacrush
-RUN git clone http://github.com/MediaCrush/MediaCrush && cd MediaCrush && virtualenv . --no-site-packages --python=python2 && source bin/activate && sudo pip install -r requirements.txt
-RUN sudo npm install -g coffee-script
-
-RUN sudo pacman -S python2-celery --noconfirm
-
-USER root
 RUN sed -i '/mediacrush/d' /etc/sudoers
 
 EXPOSE 80 443
 
-VOLUME /home/mediacrush/MediaCrush
+VOLUME /home/mediacrush
 
 COPY startup.sh /opt/
 
