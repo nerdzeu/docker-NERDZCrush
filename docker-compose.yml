@@ -1,0 +1,16 @@
+redis:
+    image: redis
+    ports:
+        - "6379"
+    volumes:
+        - redis:/data
+
+mediacrush:
+    image: nerdzeu/docker-mediacrush
+    ports:
+        - "80:81"
+        - "443:444"
+    links:
+        - redis
+    volumes:
+        - MediaCrush:/home/mediacrush/MediaCrush

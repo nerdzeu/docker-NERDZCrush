@@ -53,6 +53,8 @@ RUN sed -i '/mediacrush/d' /etc/sudoers
 
 EXPOSE 80 443
 
-# mount the config.ini file to /home/mediacrush/MediaCrush/config.ini
+VOLUME /home/mediacrush/MediaCrush
 
-ENTRYPOINT celery worker -A mediacrush -Q celery,priority && python2 /home/mediacrush/MediaCrush/compile_static.py && python2 /home/mediacrush/MediaCrush/app.py
+COPY startup.sh /opt/
+
+ENTRYPOINT bash /opt/startup.sh
