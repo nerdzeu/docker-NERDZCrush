@@ -29,9 +29,6 @@ RUN  cd /tmp && curl -O https://aur.archlinux.org/packages/ya/yaourt/yaourt.tar.
 
 RUN sudo pacman -U /tmp/yaourt/*.xz --noconfirm
 
-RUN sudo pacman -S dirmngr --noconfirm && sudo dirmngr </dev/null && sudo pacman-key --keyserver pgp.mit.edu -r D67658D8 && sudo pacman-key -f D67658D8 && \
-    sudo pacman-key --lsign-key D67658D8 && sudo pacman -Syy
-
 RUN yaourt -S libaacplus libsndfile libbs2b opencl-headers12 libutvideo-git shine vo-aacenc vo-amrwbenc --noconfirm
 RUN yaourt -S decklink-sdk --noconfirm
 
