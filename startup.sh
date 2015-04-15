@@ -10,9 +10,14 @@ if [ ! -d /home/mediacrush/MediaCrush ]; then
     pip2 install -r requirements.txt
 fi
 
+if [ ! -d /home/mediacrush/storage ]; then
+    mkdir /home/mediacrush/storage
+fi
+
 cd /home/mediacrush/MediaCrush
 
 source bin/activate
 python compile_static.py
 
+celery worker -A mediacrush -Q celery,priority &
 PORT=81 gunicorn -w 4 app:app
