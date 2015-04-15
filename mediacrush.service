@@ -6,8 +6,8 @@ After=docker.service
 Restart=always
 Type=simple
 WorkingDirectory=/home/host-user/mediacrush/
-ExecStart=/usr/local/bin/docker-compose up
+ExecStart=/usr/local/bin/docker-compose up --no-recreate
 ExecStop=/usr/local/bin/docker-compose stop
 
 [Install]
-WantedBy=local.target
+WantedBy=multi-user.target
