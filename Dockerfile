@@ -37,7 +37,7 @@ RUN cd /tmp && yaourt -G ffmpeg-full && cd ffmpeg-full && makepkg --skippgpcheck
 USER root
 
 RUN yes | pacman -U /tmp/ffmpeg-full/*.xz
-RUN pacman -S python2-pip python2-celery python2-flask jhead --noconfirm && npm install -g coffee-script
+RUN pacman -S python2-pip python2-celery python2-flask jhead librsvg --noconfirm && npm install -g coffee-script
 
 RUN sed -i '/mediacrush/d' /etc/sudoers
 
