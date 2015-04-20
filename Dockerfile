@@ -41,7 +41,7 @@ RUN pacman -S python2-pip python2-celery python2-flask jhead librsvg --noconfirm
 
 RUN sed -i '/mediacrush/d' /etc/sudoers
 
-EXPOSE 80 443
+EXPOSE 81
 
 VOLUME /home/mediacrush
 

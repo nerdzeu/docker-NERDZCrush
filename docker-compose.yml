@@ -6,11 +6,10 @@ redis:
         - redis:/data
 
 mediacrush:
-    image: nerdzeu/docker-mediacrush
-    #build: .
+    #image: nerdzeu/docker-mediacrush
+    build: .
     ports:
         - "81:81"
-        - "444:444"
     links:
         - redis
     volumes:
