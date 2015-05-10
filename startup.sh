@@ -2,7 +2,7 @@
 
 if [ ! -d /home/mediacrush/MediaCrush ]; then
     cd /home/mediacrush
-    git clone https://github.com/nerdzeu/MediaCrush
+    git clone https://github.com/nerdzeu/NERDZCrush MediaCrush
     cd MediaCrush
 
     virtualenv . --python=python2
