@@ -1,7 +1,7 @@
 FROM base/archlinux
 MAINTAINER Paolo Galeone <nessuno@nerdz.eu>
 
-RUN sed -i -e 's#https://mirrors\.kernel\.org#http://mirror.clibre.uqam.ca#g' /etc/pacman.d/mirrorlist && \
+RUN sed -i -e 's#https://mirrors\.kernel\.org#http://mirror.us.leaseweb.net#g' /etc/pacman.d/mirrorlist && \
        pacman -Sy haveged archlinux-keyring --noconfirm && haveged -w 1024 -v 1 && \
        pacman-key --init && pacman-key --populate archlinux
 
@@ -29,8 +29,21 @@ RUN  cd /tmp && curl -O https://aur.archlinux.org/packages/ya/yaourt/yaourt.tar.
 
 RUN sudo pacman -U /tmp/yaourt/*.xz --noconfirm
 
-RUN yaourt -S libaacplus libsndfile libbs2b opencl-headers12 libutvideo-git shine vo-aacenc vo-amrwbenc --noconfirm
-RUN yaourt -S decklink-sdk --noconfirm
+RUN yaourt -S libaacplus libsndfile libbs2b opencl-headers20 libutvideo-git shine vo-aacenc vo-amrwbenc --noconfirm
+
+RUN mkdir /tmp/deck
+
+COPY decklink-pkgbuild /tmp/deck/PKGBUILD
+
+RUN yaourt -S glu qt4 --noconfirm
+
+RUN cd /tmp/deck && makepkg && sudo pacman -U decklink-sdk*.xz --noconfirm
+
+RUN mkdir /tmp/libubv
+
+COPY libutvideo-pkgbuild /tmp/libubv/PKGBUILD
+
+RUN cd /tmp/libubv && makepkg && sudo pacman -U libut*.xz --noconfirm
 
 RUN cd /tmp && yaourt -G ffmpeg-full && cd ffmpeg-full && makepkg --skippgpcheck --noconfirm -s
 
