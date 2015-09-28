@@ -11,8 +11,8 @@ Use it as part of nerdzeu/docker.
 If you want to pull and run the image you can do it in the classical docker way:
 
 ```sh
-docker pull nerdzeu/docker-mediacrush
-docker run nerdzeu/docker-mediacrush
+docker pull nerdzeu/docker-nerdzcrush
+docker run nerdzeu/docker-nerdzcrush
 ```
 
 If you want to build the image:
