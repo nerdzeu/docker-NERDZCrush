@@ -3,7 +3,7 @@ MAINTAINER Paolo Galeone <nessuno@nerdz.eu>
 
 RUN sed -i -e 's#https://mirrors\.kernel\.org#http://mirror.us.leaseweb.net#g' /etc/pacman.d/mirrorlist && \
        pacman -Sy haveged archlinux-keyring --noconfirm && haveged -w 1024 -v 1 && \
-       pacman-key --init && pacman-key --populate archlinux
+       pacman-key --init && pacman-key --populate archlinux && pacman -Syy
 
 RUN yes | pacman -S lzo
 
@@ -17,25 +17,28 @@ RUN pacman-db-upgrade
 RUN useradd -m -s /bin/bash mediacrush && echo "mediacrush ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 USER mediacrush
 
-RUN cd /tmp && curl -O https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz && \
-        tar zxvf package-query.tar.gz && cd package-query && makepkg
+RUN cd /tmp && curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/cower-git.tar.gz && \
+        tar zxvf cower-git.tar.gz && cd cower-git && makepkg
+
+RUN cd /tmp && curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/expac-git.tar.gz && \
+        tar zxvf expac-git.tar.gz && cd expac-git && makepkg
 
 USER root
-RUN pacman -U /tmp/package-query/*.xz --noconfirm
+RUN pacman -U /tmp/cower-git/*.xz /tmp/expac-git/*.xz --noconfirm
 
 USER mediacrush
-RUN  cd /tmp && curl -O https://aur.archlinux.org/packages/ya/yaourt/yaourt.tar.gz && tar zxvf yaourt.tar.gz && \
-        cd yaourt && makepkg
+RUN  cd /tmp && curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/pacaur.tar.gz && tar zxvf pacaur.tar.gz && \
+        cd pacaur && makepkg
 
-RUN sudo pacman -U /tmp/yaourt/*.xz --noconfirm
+RUN sudo pacman -U /tmp/pacaur/*.xz --noconfirm
 
-RUN yaourt -S libaacplus libsndfile libbs2b opencl-headers20 libutvideo-git shine vo-aacenc vo-amrwbenc --noconfirm
+RUN pacaur -S libaacplus libsndfile libbs2b opencl-headers20 libutvideo-git shine vo-aacenc vo-amrwbenc --noconfirm
 
 RUN mkdir /tmp/deck
 
 COPY decklink-pkgbuild /tmp/deck/PKGBUILD
 
-RUN yaourt -S glu qt4 --noconfirm
+RUN pacaur -S glu qt4 --noconfirm
 
 RUN cd /tmp/deck && makepkg && sudo pacman -U decklink-sdk*.xz --noconfirm
 
@@ -45,7 +48,7 @@ COPY libutvideo-pkgbuild /tmp/libubv/PKGBUILD
 
 RUN cd /tmp/libubv && makepkg && sudo pacman -U libut*.xz --noconfirm
 
-RUN cd /tmp && yaourt -G ffmpeg-full && cd ffmpeg-full && makepkg --skippgpcheck --noconfirm -s
+RUN cd /tmp && pacaur -G ffmpeg-full && cd ffmpeg-full && makepkg --skippgpcheck --noconfirm -s
 
 USER root
 
