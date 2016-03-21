@@ -60,4 +60,6 @@ VOLUME /home/mediacrush
 
 COPY startup.sh /opt/
 
+USER mediacrush
+
 ENTRYPOINT bash /opt/startup.sh
