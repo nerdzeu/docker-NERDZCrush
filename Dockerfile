@@ -10,7 +10,7 @@ RUN yes | pacman -S lzo
 RUN pacman -Su sudo base-devel nginx subversion libunistring git imagemagick python2 python-virtualenv \
         nodejs libjpeg-turbo texlive-bin tidyhtml optipng \
         libtheora libvorbis libx264 libvpx redis python-pip wget ghostscript openexr openjpeg2 libwmf \
-        librsvg libxml2 libwebp ladspa  libvdpau yasm hardening-wrapper yajl --noconfirm
+        librsvg libxml2 libwebp ladspa  libvdpau yasm hardening-wrapper yajl perl --noconfirm
 
 RUN pacman-db-upgrade
 
