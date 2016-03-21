@@ -17,10 +17,10 @@ RUN pacman-db-upgrade
 RUN useradd -m -s /bin/bash mediacrush && echo "mediacrush ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 USER mediacrush
 
-RUN cd /tmp && curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/cower-git.tar.gz && \
+RUN PATH=$PATH:/usr/bin/core_perl cd /tmp && curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/cower-git.tar.gz && \
         tar zxvf cower-git.tar.gz && cd cower-git && makepkg
 
-RUN cd /tmp && curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/expac-git.tar.gz && \
+RUN PATH=$PATH:/usr/bin/core_perl cd /tmp && curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/expac-git.tar.gz && \
         tar zxvf expac-git.tar.gz && cd expac-git && makepkg
 
 USER root
