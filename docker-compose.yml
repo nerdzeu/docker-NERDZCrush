@@ -3,14 +3,14 @@ redis:
     expose:
         - "6379"
     volumes:
-        - redis:/data
+        - ./redis:/data
 
 nerdzcrush:
     image: nerdzeu/docker-nerdzcrush
     #build: .
     ports:
-        - "81:81"
+        - "9999:81"
     links:
         - redis
     volumes:
-        - mediacrush:/home/mediacrush
+        - ./mediacrush:/home/mediacrush

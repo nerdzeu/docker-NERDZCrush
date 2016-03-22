@@ -62,7 +62,7 @@ RUN pacman -S python2-pip python2-celery python2-flask jhead librsvg npm --nocon
 
 RUN sed -i '/mediacrush/d' /etc/sudoers
 
-EXPOSE 81
+EXPOSE 9999
 
 VOLUME /home/mediacrush
 
