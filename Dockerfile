@@ -53,7 +53,7 @@ RUN cd /tmp/libubv && makepkg && sudo pacman -U libut*.xz --noconfirm
 
 RUN gpg --no-tty --keyserver pgp.mit.edu --recv-keys FCF986EA15E6E293A5644F10B4322F04D67658D8
 #RUN gpg --no-tty --lsign FCF986EA15E6E293A5644F10B4322F04D67658D8
-RUN pacaur -S ffmpeg-full
+RUN pacaur -S ffmpeg-full --noconfirm
 #RUN cd /tmp/pacaurtmp-/ffmpeg-full/ && sudo pacman -U *.xz --noconfirm
 
 USER root
