@@ -20,4 +20,4 @@ source bin/activate
 python compile_static.py
 
 celery worker -A mediacrush -Q celery,priority &
-PORT=81 gunicorn -w 4 app:app
+PORT=9999 gunicorn -w 4 app:app
