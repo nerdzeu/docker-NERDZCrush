@@ -9,7 +9,7 @@ nerdzcrush:
     image: nerdzeu/docker-nerdzcrush
     #build: .
     ports:
-        - "9999:81"
+        - "81:9999"
     links:
         - redis
     volumes:
