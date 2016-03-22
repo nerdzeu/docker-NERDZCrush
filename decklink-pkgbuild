@@ -1,14 +1,3 @@
-# Maintainer: Antoine Lubineau <antoine@lubignon.info>
- 
-# milahu@gmail.com:
-# aur-decklink-sdk-10.3.PKGBUILD
-# https://aur.archlinux.org/packages/decklink-sdk/
-# copy PKGBUILD file to "/tmp/yaourt-tmp-$USER/aur-decklink-sdk/PKGBUILD"
-# * fixed version to 10.3 [10.3-1?]
-#   version 10.4-1 requires registration at blackmagicdesign.com
-#   before you can download Blackmagic_DeckLink_SDK_10.4-1.zip
-# * fixed source path SDK/Linux --> Linux
- 
 pkgname=decklink-sdk
 pkgver=10.3
 pkgrel=1
@@ -20,7 +9,7 @@ license=('custom')
 depends=('glu' 'mesa' 'qt4')
 makedepends=('unzip')
 options=('!strip')
-source=("http://software.blackmagicdesign.com/SDK/Blackmagic_DeckLink_SDK_${pkgver}.zip")
+source=("local://Blackmagic_DeckLink_SDK_${pkgver}.zip")
 sha256sums=('7e07867b39ea036e3f9f9cd1b6e9ef627b6a12366e5bb6cf717cb839e7d5b2be')
  
 package() {
@@ -36,5 +25,3 @@ package() {
     install -D $util "$pkgdir/usr/bin/$util"
   done
 }
- 
-# vim:set ts=2 sw=2 et:

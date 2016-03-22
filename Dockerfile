@@ -17,10 +17,12 @@ RUN pacman-db-upgrade
 RUN useradd -m -s /bin/bash mediacrush && echo "mediacrush ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 USER mediacrush
 
-RUN PATH=$PATH:/usr/bin/core_perl cd /tmp && curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/cower-git.tar.gz && \
+ENV PATH /usr/bin/core_perl:$PATH
+
+RUN cd /tmp && curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/cower-git.tar.gz && \
         tar zxvf cower-git.tar.gz && cd cower-git && makepkg
 
-RUN PATH=$PATH:/usr/bin/core_perl cd /tmp && curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/expac-git.tar.gz && \
+RUN cd /tmp && curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/expac-git.tar.gz && \
         tar zxvf expac-git.tar.gz && cd expac-git && makepkg
 
 USER root
@@ -32,11 +34,12 @@ RUN  cd /tmp && curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/pacaur.t
 
 RUN sudo pacman -U /tmp/pacaur/*.xz --noconfirm
 
-RUN pacaur -S libaacplus libsndfile libbs2b opencl-headers20 libutvideo-git shine vo-aacenc vo-amrwbenc --noconfirm
+RUN pacaur -S libaacplus libsndfile libbs2b opencl-headers libutvideo-git shine vo-aacenc vo-amrwbenc --noconfirm
 
 RUN mkdir /tmp/deck
 
 COPY decklink-pkgbuild /tmp/deck/PKGBUILD
+COPY Blackmagic_DeckLink_SDK_10.3.zip /tmp/deck/
 
 RUN pacaur -S glu qt4 --noconfirm
 
@@ -48,11 +51,11 @@ COPY libutvideo-pkgbuild /tmp/libubv/PKGBUILD
 
 RUN cd /tmp/libubv && makepkg && sudo pacman -U libut*.xz --noconfirm
 
-RUN cd /tmp && pacaur -G ffmpeg-full && cd ffmpeg-full && makepkg --skippgpcheck --noconfirm -s
+RUN gpg --no-tty --keyserver pgp.mit.edu --recv-keys FCF986EA15E6E293A5644F10B4322F04D67658D8&& gpg --no-tty --lsign FCF986EA15E6E293A5644F10B4322F04D67658D8
+RUN sudo pacaur -S ffmpeg-full --noconfirm
 
 USER root
 
-RUN yes | pacman -U /tmp/ffmpeg-full/*.xz
 RUN pacman -S python2-pip python2-celery python2-flask jhead librsvg npm --noconfirm && npm install -g coffee-script
 
 RUN sed -i '/mediacrush/d' /etc/sudoers
