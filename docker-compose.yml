@@ -1,16 +1,20 @@
-redis:
-    image: redis
-    expose:
-        - "6379"
-    volumes:
-        - ./redis:/data
+version: '2'
 
-nerdzcrush:
-    image: nerdzeu/docker-nerdzcrush
-    #build: .
-    ports:
-        - "81:9999"
-    links:
-        - redis
-    volumes:
-        - ./mediacrush:/home/mediacrush
+services:
+
+    redis:
+        image: redis
+        expose:
+            - "6379"
+        volumes:
+            - ./redis:/data
+
+    nerdzcrush:
+        image: nerdzeu/docker-nerdzcrush
+        #build: .
+        ports:
+            - "9999:9999"
+        links:
+            - redis
+        volumes:
+            - ./mediacrush:/home/mediacrush
