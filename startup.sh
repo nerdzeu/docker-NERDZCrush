@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+chown -R mediacrush:mediacrush /home/mediacrush
+
 if [ ! -d /home/mediacrush/MediaCrush ]; then
     cd /home/mediacrush
     git clone https://github.com/nerdzeu/NERDZCrush MediaCrush
