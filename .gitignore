@@ -1,2 +1,4 @@
-redis/*
 mediacrush/storage
+mediacrush/.bash_history
+mediacrush/.cache/
+mediacrush/.local/

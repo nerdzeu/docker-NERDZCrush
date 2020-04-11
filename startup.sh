@@ -1,23 +1,19 @@
 #!/usr/bin/env bash
 
-chown -R mediacrush:mediacrush /home/mediacrush
-
-if [ ! -d /home/mediacrush/MediaCrush ]; then
-    cd /home/mediacrush
-    git clone https://github.com/nerdzeu/NERDZCrush MediaCrush
+cd /home/mediacrush/MediaCrush
+if [ ! -d venv ]; then
+    virtualenv --python=python2 venv
+    source venv/bin/activate
+    pip2 install --ignore-installed six
+    pip2 install -r requirements.txt
 fi
 
-cd /home/mediacrush/MediaCrush
-
-virtualenv . --python=python2
-source bin/activate
-pip2 install -r requirements.txt
+source venv/bin/activate
 
 if [ ! -d /home/mediacrush/storage ]; then
     mkdir /home/mediacrush/storage
 fi
 
-source bin/activate
 python compile_static.py
 
 celery worker -A mediacrush -Q celery,priority &

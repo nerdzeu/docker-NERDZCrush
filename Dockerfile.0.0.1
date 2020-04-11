@@ -1,0 +1,51 @@
+FROM nerdzeu/docker-nerdzcrush:lastest
+
+MAINTAINER Paolo Galeone <nessuno@nerdz.eu>
+
+RUN pacman -Syy pacman haveged archlinux-keyring --noconfirm && haveged -w 1024 -v 1 && \
+    pacman-key --init && pacman-key --populate archlinux && pacman-db-upgrade && pacman -Syy
+
+RUN pacman -S fakeroot go-pie sudo base-devel nginx subversion git --noconfirm
+
+RUN useradd -m -s /bin/bash aur && echo "aur ALL = NOPASSWD: /usr/bin/pacman" >> /etc/sudoers
+
+USER aur
+
+RUN cd /tmp && \
+        curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz && \
+        tar zxvf yay.tar.gz && \
+        cd yay && makepkg && \
+        ls && sudo pacman -U yay*.pkg.* --noconfirm && \
+        cd /tmp && rm -rf /tmp/yay*
+
+RUN yay -S libunistring imagemagick python2 python-virtualenv \
+        nodejs libjpeg-turbo texlive-bin tidyhtml optipng \
+        libtheora libvorbis libx264 libvpx redis python-pip wget ghostscript openexr openjpeg2 libwmf \
+        librsvg libxml2 libwebp ladspa  libvdpau yasm yajl perl \
+        libaacplus libsndfile libbs2b opencl-headers shine vo-aacenc vo-amrwbenc --noconfirm
+
+RUN mkdir /tmp/deck
+
+COPY decklink-pkgbuild /tmp/deck/PKGBUILD
+COPY Blackmagic_DeckLink_SDK_10.3.zip /tmp/deck/
+
+RUN yay -S glu qt4 --noconfirm
+
+RUN cd /tmp/deck && makepkg && sudo pacman -U decklink-sdk*.pkg.* --noconfirm
+
+RUN yay -S python2-pip jhead librsvg npm ffmpeg --noconfirm
+
+USER root
+RUN npm install -g coffeescript
+
+# Create a group with a well-known id to work correctly with volumes
+# and add the correct user to the group
+RUN groupadd -g 7777 nerdz && \
+        useradd -m -s /bin/bash -g 7777 mediacrush
+
+EXPOSE 9999
+VOLUME /home/mediacrush
+COPY startup.sh /opt/
+
+USER mediacrush
+ENTRYPOINT bash /opt/startup.sh
