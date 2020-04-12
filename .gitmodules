@@ -1,3 +1,3 @@
 [submodule "mediacrush/MediaCrush"]
 	path = mediacrush/MediaCrush
-	url = git@github.com:nerdzeu/NERDZCrush.git
+	url = https://github.com/nerdzeu/NERDZCrush
