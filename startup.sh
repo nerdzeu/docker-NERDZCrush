@@ -10,8 +10,8 @@ fi
 
 source venv/bin/activate
 
-if [ ! -d /home/mediacrush/storage ]; then
-    mkdir /home/mediacrush/storage
+if [ ! -d storage ]; then
+    mkdir storage
 fi
 
 python compile_static.py

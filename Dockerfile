@@ -13,5 +13,8 @@ USER root
 RUN groupadd -g 7777 nerdz && \
         gpasswd -a mediacrush -g nerdz
 
+RUN locale-gen en_US.UTF-8
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+
 USER mediacrush
 ENTRYPOINT bash /opt/new.sh
